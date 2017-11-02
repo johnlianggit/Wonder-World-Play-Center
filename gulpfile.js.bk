@@ -1,0 +1,100 @@
+var gulp = require('gulp');
+var imagemin = require('gulp-imagemin');
+
+var autoprefix = require('gulp-autoprefixer');
+var minifyCSS = require('gulp-minify-css');
+var concat = require('gulp-concat');
+
+var browserSync = require('browser-sync').create();
+
+var uglify = require('gulp-uglify');
+
+var changed = require('gulp-changed');
+
+var del = require('del');
+
+/*gulp.task('default', function(){
+    console.log('hello world');
+});*/
+
+
+/*gulp.task('default', ['imagemin', 'styles'], function() {
+
+});
+
+gulp.task('default', ['styles'], function() {
+   // watch for CSS changes
+   gulp.watch('public/css/*.css', function() {
+      // run styles upon changes
+      gulp.run('styles');
+   });
+});*/
+
+/*gulp.task('default', ['browserSync', 'styles'], function (){
+   gulp.watch('src/styles/*.css', ['styles']);
+});*/
+
+
+/*gulp.task('imagemin', function() {
+   var img_src = 'public/img/*', img_dest = 'gulpminimage';
+
+   gulp.src(img_src)
+   .pipe(imagemin())
+   .pipe(gulp.dest(img_dest));
+});*/
+
+gulp.task('styles', function() {
+   gulp.src(['public/css/*.css'])
+   .pipe(concat('styles.css'))
+   .pipe(autoprefix('last 2 versions'))
+   .pipe(minifyCSS())
+   .pipe(gulp.dest('gulpminimage/'))
+   .pipe(browserSync.reload({
+      stream: true
+   }))
+});
+
+
+gulp.task('browserSync', function() {
+   browserSync.init({
+	    proxy: 'http://localhost',
+    /*  server: {
+         baseDir: 'public'
+      },*/
+   });
+});
+
+
+gulp.task('js', function(){
+   gulp.src('public/css/*.js')
+   .pipe(concat('script.js'))
+   .pipe(uglify())
+   .pipe(gulp.dest('gulpminimage'));
+});
+
+gulp.task('css', function(){
+   gulp.src('public/css/*.css')
+   .pipe(concat('styles.css'))
+   .pipe(minifyCSS())
+   .pipe(gulp.dest('gulpminimage'));
+});
+
+/*gulp.task('default',['js','css'],function(){
+});*/
+
+gulp.task('imagemin', function() {
+   var imgSrc = 'public/img/*.+(png|jpg|gif)',
+   imgDst = 'gulpminimage';
+   
+   gulp.src(imgSrc)
+   .pipe(changed(imgDst))
+   .pipe(imagemin())
+   .pipe(gulp.dest(imgDst));
+});
+
+gulp.task('default',['clean:build'],function(){
+});
+
+gulp.task('clean:build', function() {
+   return del.sync('build');
+});

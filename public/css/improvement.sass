@@ -1,0 +1,63 @@
+.topline
+  border-bottom: 2px solid aqua
+
+.bottomline
+  border-top: 2px solid aqua
+  padding-top: 20px
+
+.bgimgcentered
+  padding-top: 22px
+
+.topbgcolor
+  background: -moz-linear-gradient(to left, rgba(128, 128, 128, 0.2), white)
+
+.middlebgcolor
+  background: -moz-linear-gradient(to right, white, white)
+
+@mixin transition($notransition) 
+ -webkit-transition: $notransition
+ -moz-transition: $notransition
+ -o-transition: $notransition
+ -ms-transition: $notransition
+ transition: $notransition
+ 
+#main,#flower
+   @include transition(none !important)
+			
+@media only screen and (min-width: 701px) 
+  div
+    &#main
+      width: 45%
+      height: 450px
+      display: inline-block
+      border: 1px solid aqua
+    &#flower
+      width: 45%
+      height: 450px
+      float: right
+      border: 1px solid aqua
+
+@media only screen and (max-width: 700px)
+  .responsive
+    display: block
+    width: 100%
+    height: 400px
+    border: 1px solid aqua
+  .footer
+    margin-top: 380px
+	
+.maximizewidth
+  width: 100% !important
+  height: auto !important
+  
+.small-logo
+  width: 100px;
+  height: 80px;
+  
+.moveup
+  margin-top: 0px;
+  padding-top: 2px;
+  height: 470px 
+
+.move-up
+  margin-top: 10px
